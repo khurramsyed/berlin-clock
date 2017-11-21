@@ -30,5 +30,23 @@ public class BerlinClockTest {
         assertThat(time[0]).isEqualTo(OFF);
     }
 
+    @Test
+    public void secondRowShouldShowRedLightsForHoursPastInMultipleOfFives(){
+        String[] time = clock.convertTime("01:00:00").split("\n");
+        assertThat(time[1]).isEqualTo("OOOO");
+
+        time = clock.convertTime("13:00:00").split("\n");
+        assertThat(time[1]).isEqualTo("RROO");
+    }
+
+    @Test
+    public void thirdRowRowShouldShowRedLightsForHoursPastInRemainderOfFive(){
+        String[] time = clock.convertTime("01:00:00").split("\n");
+        assertThat(time[2]).isEqualTo("ROOO");
+
+        time = clock.convertTime("13:00:00").split("\n");
+        assertThat(time[2]).isEqualTo("RRRO");
+    }
+
 
 }
