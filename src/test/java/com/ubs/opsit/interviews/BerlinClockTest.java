@@ -10,24 +10,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class BerlinClockTest {
 
 
-    public static final String YELLOW = "Y";
-    public static final String OFF = "O";
     TimeConverter clock = new BerlinClock();
 
     @Test
     public void evenSecondsShouldShowTopLightsAsYellow(){
         String[] time = clock.convertTime("00:00:00").split("\n");
-        assertThat(time[0]).isEqualTo(YELLOW);
+        assertThat(time[0]).isEqualTo(BerlinClock.YELLOW);
         time = clock.convertTime("00:00:24").split("\n");
-        assertThat(time[0]).isEqualTo(YELLOW);
+        assertThat(time[0]).isEqualTo(BerlinClock.YELLOW);
     }
 
     @Test
     public void oddSecondsShouldShowTopLightAsOff(){
         String[] time = clock.convertTime("00:00:01").split("\n");
-        assertThat(time[0]).isEqualTo(OFF);
+        assertThat(time[0]).isEqualTo(BerlinClock.OFF);
         time = clock.convertTime("00:00:59").split("\n");
-        assertThat(time[0]).isEqualTo(OFF);
+        assertThat(time[0]).isEqualTo(BerlinClock.OFF);
     }
 
     @Test
@@ -83,5 +81,22 @@ public class BerlinClockTest {
         assertThat(time[4]).isEqualTo("YYYO");
 
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithWrongMinutes(){
+        clock.convertTime("01:60:00").split("\n");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithWrongHourFormat(){
+        clock.convertTime("24:59:00").split("\n");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithWrongSecondFormat(){
+        clock.convertTime("23:59:60").split("\n");
+    }
+
+
 
 }

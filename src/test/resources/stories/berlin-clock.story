@@ -36,11 +36,11 @@ YYRYYRYYRYY
 YYYY
 
 Scenario: Midnight
-When the time is 24:00:00
+When the time is 00:00:00
 Then the clock should look like
 Y
-RRRR
-RRRR
+OOOO
+OOOO
 OOOOOOOOOOO
 OOOO
 
