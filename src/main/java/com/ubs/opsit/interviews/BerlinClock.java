@@ -16,7 +16,8 @@ public class BerlinClock implements TimeConverter {
     public String convertTime(String aTime) {
         int[] time = Arrays.asList(aTime.split(":")).stream().mapToInt(Integer::parseInt).toArray();
         return processSeconds(time[2])+
-                processHours(time[0]);
+                processHours(time[0])+
+                processMinutes(time[1]);
 
     }
 
@@ -29,7 +30,16 @@ public class BerlinClock implements TimeConverter {
                 processLamps(4,hours%5, RED);
     }
 
+    private String processMinutes(int minutes){
+        return processMinutesFirstRow(minutes)+
+                ( processLamps(4, minutes%5, YELLOW).replaceFirst("\n",""));
+    }
 
+    private String processMinutesFirstRow(int minutes){
+        String minutesRow = processLamps(11, minutes/5 , YELLOW);
+        return minutesRow.replaceAll("YYY","YYR");
+
+    }
 
     private String processLamps(int rowLampCount, int onCount, char onSign){
         StringBuffer row = new StringBuffer("");

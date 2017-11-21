@@ -49,4 +49,39 @@ public class BerlinClockTest {
     }
 
 
+
+    @Test
+    public void fourthRowShouldShowLightsForMinutesPastInMultipleOfFives(){
+        String[] time = clock.convertTime("01:07:00").split("\n");
+        assertThat(time[3]).isEqualTo("YOOOOOOOOOO");
+
+
+        time = clock.convertTime("13:27:00").split("\n");
+        assertThat(time[3]).isEqualTo("YYRYYOOOOOO");
+    }
+
+    @Test
+    public void fourthRowRowShouldShowEveryQuarterOfHourIsRed(){
+        String[] time = clock.convertTime("01:20:00").split("\n");
+        assertThat(time[3]).isEqualTo("YYRYOOOOOOO");
+
+
+        time = clock.convertTime("13:57:00").split("\n");
+        assertThat(time[3]).isEqualTo("YYRYYRYYRYY");
+    }
+
+
+    @Test
+    public void fifthRowShouldShowMinutesInRemainderOfFive(){
+        String[] time = clock.convertTime("01:01:00").split("\n");
+        assertThat(time[4]).isEqualTo("YOOO");
+
+        time = clock.convertTime("23:04:00").split("\n");
+        assertThat(time[4]).isEqualTo("YYYY");
+
+        time = clock.convertTime("23:53:00").split("\n");
+        assertThat(time[4]).isEqualTo("YYYO");
+
+    }
+
 }
